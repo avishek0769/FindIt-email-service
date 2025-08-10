@@ -13,6 +13,10 @@ app.use(express.json());
 
 const resend = new Resend(process.env.RESEND_API_KEY);
 
+app.get('/health', (req, res) => {
+    res.status(200).json({ status: "ok" });
+});
+
 app.post('/send-email', async (req, res) => {
     const { to, code } = req.body;
 
@@ -111,7 +115,7 @@ app.post('/send-email', async (req, res) => {
                 </html>
             `
         })
-        
+
         res.status(200).json({ success: true, messageId: data?.data?.id || null });
     }
     catch (e) {
@@ -119,4 +123,5 @@ app.post('/send-email', async (req, res) => {
     }
 });
 
-app.listen(process.env.PORT, () => console.log(`Server running on port ${process.env.PORT}`));
+// app.listen(process.env.PORT, () => console.log(`Server running on port ${process.env.PORT}`));
+export default app;

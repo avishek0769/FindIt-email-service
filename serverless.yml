@@ -1,0 +1,23 @@
+# "org" ensures this Service is used with the correct Serverless Framework Access Key.
+org: avishekorg
+# "service" is the name of this project. This will also be added to your AWS resource names.
+service: email-service
+
+provider:
+    name: aws
+    runtime: nodejs20.x
+    environment:
+        RESEND_API_KEY: ${env:RESEND_API_KEY}
+        PORT: ${env:PORT}
+    region: ap-south-1
+    # Uncomment to easily set up a custom domain. Read the docs for more details:
+    # https://www.serverless.com/framework/docs/providers/aws/guide/domains
+    # domain: api.example.com
+
+functions:
+    email-service:
+        handler: handler.handler
+        events:
+            - httpApi:
+                path: /{proxy+}
+                method: ANY
