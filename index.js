@@ -18,12 +18,32 @@ app.get('/health', (req, res) => {
 });
 
 app.post('/send-email', async (req, res) => {
-    const { to, code } = req.body;
+    let body = req.body;
+
+    if (Buffer.isBuffer(body)) {
+        body = body.toString();
+    }
+
+    else if (body?.type === "Buffer" && Array.isArray(body.data)) {
+        body = Buffer.from(body.data).toString();
+    }
+
+    try {
+        body = JSON.parse(body);
+    } catch (err) {
+        console.error("Invalid JSON body:", err);
+    }
+
+    const { to, code } = body;
+
+    if (!to || !code) {
+        return res.status(400).json({ success: false, message: "Missing to or code", to: to, code: code, body: req?.body });
+    }
 
     try {
         const data = await resend.emails.send({
-            from: "FindIt <team@nexus-network.tech>",
-            to,
+            from: "FindIt <noreply@avishekadhikary.tech>",
+            to: [to],
             subject: "Code for verifying item found",
             html: `
                 <!DOCTYPE html>
@@ -116,7 +136,7 @@ app.post('/send-email', async (req, res) => {
             `
         })
 
-        res.status(200).json({ success: true, messageId: data?.data?.id || null });
+        res.status(200).json({ success: true, data: data || null });
     }
     catch (e) {
         res.status(400).json({ success: false, error: e.message });
