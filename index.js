@@ -200,8 +200,8 @@ app.post('/send-email', async (req, res) => {
  
                        <p style="margin-top:0;font-weight:600;">Item details</p>
  
-                       <!-- Use a table for the item card so email clients that don't support flexbox
-                            will render image and metadata in the intended order/stacking. -->
+                       <!-- Use a table for the item card so email clients that don't support flexbox will render image and metadata in the intended order/stacking. -->
+
                        <table class="item-card" role="presentation" width="100%" cellspacing="0" cellpadding="0" border="0">
                          <tr>
                            <td class="item-image" width="120" style="padding:14px;">
@@ -218,13 +218,27 @@ app.post('/send-email', async (req, res) => {
                          </tr>
                        </table>
  
-                       <h3 style="margin-top:0;font-weight:600;">Keep this code safe—you’ll need it later, when your item is found!</h3>
+                        <h3 style="margin-top:0;font-weight:600;">Keep this code safe—you’ll need it to confirm your item has been found!</h3>
+
+                        <p class="note">
+                        This code verifies that <strong>you</strong> (the person who reported the lost item) have successfully recovered it. 
+                        Once you’ve received your item back, open the FindIt app and use this code to mark it as <strong>Found</strong>.
+                        </p>
+
+                        <p class="note">
+                        Please make sure to update your item’s status once it’s recovered. 
+                        Leaving it unmarked may create confusion or spread false information among other students and college administration.
+                        </p>
+
+                        <p class="note">
+                        Do <strong>not share this code</strong> with anyone. It ensures that only you can update your item’s status.
+                        </p>
+
+                        <p class="note">
+                        If you didn’t request this code, you can safely ignore this email.
+                        </p>
  
-                       <p class="note">This code is used to verify the user who has found your item. If someone finds your lost item, they will contact you. After you confirm that the item is indeed with them, you can share this code. The finder will then use it to update the item's status from "Not Found" to "Found".</p>
- 
-                       <p class="note">If you didn’t request this code, you can safely ignore this email.</p>
- 
-                       <p style="margin-top:18px;">Thanks,<br>— Avishek from FindIt</p>
+                        <p style="margin-top:18px;">Thanks,<br>— Avishek from FindIt</p>
                      </div>
  
                      <div class="footer">
@@ -232,8 +246,8 @@ app.post('/send-email', async (req, res) => {
                      </div>
                  </div>
  
-                 </body>
-                 </html>
+                </body>
+                </html>
             `
         })
 
